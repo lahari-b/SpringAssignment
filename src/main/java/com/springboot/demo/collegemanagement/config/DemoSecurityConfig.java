@@ -21,23 +21,25 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 
         auth.jdbcAuthentication().dataSource(securityDataSource);
     }
-
+    private static final String faculty = "FACULTY";
+    private static final String admin = "ADMIN";
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        
 
         http.authorizeRequests()
-                .antMatchers("/").hasAnyRole("ADMIN","STUDENT","FACULTY")
-                .antMatchers("/adminStaff/**").hasRole("ADMIN")
-                .antMatchers("/faculty/showFormForAdd").hasRole("ADMIN")
-                .antMatchers("/faculty/showFormForUpdate").hasRole("ADMIN")
-                .antMatchers("/faculty/delete").hasRole("ADMIN")
-                .antMatchers("/students/list").hasAnyRole("ADMIN","FACULTY")
-                .antMatchers("/students/showFormForAdd").hasRole("ADMIN")
-                .antMatchers("/students/showFormForUpdate").hasRole("ADMIN")
-                .antMatchers("/students/delete").hasRole("ADMIN")
-                .antMatchers("/courses/showFormForAdd").hasAnyRole("ADMIN","FACULTY")
-                .antMatchers("/courses/showFormForUpdate").hasAnyRole("ADMIN","FACULTY")
-                .antMatchers("/courses/delete").hasAnyRole("ADMIN","FACULTY")
+                .antMatchers("/").hasAnyRole(admin,"STUDENT",faculty)
+                .antMatchers("/adminStaff/**").hasRole(admin)
+                .antMatchers("/faculty/showFormForAdd").hasRole(admin)
+                .antMatchers("/faculty/showFormForUpdate").hasRole(admin)
+                .antMatchers("/faculty/delete").hasRole(admin)
+                .antMatchers("/students/list").hasAnyRole(admin,faculty)
+                .antMatchers("/students/showFormForAdd").hasRole(admin)
+                .antMatchers("/students/showFormForUpdate").hasRole(admin)
+                .antMatchers("/students/delete").hasRole(admin)
+                .antMatchers("/courses/showFormForAdd").hasAnyRole(admin,faculty)
+                .antMatchers("/courses/showFormForUpdate").hasAnyRole(admin,faculty)
+                .antMatchers("/courses/delete").hasAnyRole(admin,faculty)
                 .and()
                 .formLogin()
                 .loginPage("/showMyLoginPage")

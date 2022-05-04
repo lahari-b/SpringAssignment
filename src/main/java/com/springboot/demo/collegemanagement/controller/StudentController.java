@@ -1,7 +1,5 @@
 package com.springboot.demo.collegemanagement.controller;
 
-import com.springboot.demo.collegemanagement.dao.CourseRepository;
-import com.springboot.demo.collegemanagement.dao.StudentRepository;
 import com.springboot.demo.collegemanagement.entity.Course;
 import com.springboot.demo.collegemanagement.entity.Student;
 import com.springboot.demo.collegemanagement.service.course.CourseService;

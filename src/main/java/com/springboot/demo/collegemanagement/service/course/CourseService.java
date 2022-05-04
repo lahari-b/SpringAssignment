@@ -1,6 +1,5 @@
 package com.springboot.demo.collegemanagement.service.course;
 
-import com.springboot.demo.collegemanagement.entity.AdminStaff;
 import com.springboot.demo.collegemanagement.entity.Course;
 
 import java.util.List;
