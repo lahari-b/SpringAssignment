@@ -30,7 +30,7 @@
 			**/com/springboot/demo/collegemanagement/entity/**,
 			**/com/springboot/demo/collegemanagement/exception/**,
 			**/com/springboot/demo/collegemanagement/dao/**,
-			**/com/springboot/demo/collegemanagement/collegemanagementApplication**,
+			**/com/springboot/demo/collegemanagement/CollegemanagementApplication**,
 		</sonar.exclusions>
 
 		<maven.compiler.source>1.8</maven.compiler.source>
