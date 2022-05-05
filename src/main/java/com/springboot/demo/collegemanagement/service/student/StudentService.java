@@ -9,7 +9,7 @@ public interface StudentService {
 
     public Student findById(int theId);
 
-    public void save(Student theStudent);
+    public Student save(Student theStudent);
 
     public void deleteById(int theId);
 }

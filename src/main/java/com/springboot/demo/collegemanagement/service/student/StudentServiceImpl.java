@@ -11,8 +11,8 @@ import java.util.Optional;
 
 @Service
 public class StudentServiceImpl implements StudentService{
-    private StudentRepository studentRepository;
-    private CourseRepository courseRepository;
+    private final StudentRepository studentRepository;
+    private final CourseRepository courseRepository;
 
     @Autowired
     public StudentServiceImpl(StudentRepository studentRepository, CourseRepository courseRepository) {
@@ -23,7 +23,7 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public List<Student> findAll() {
 
-        return (List<Student>)(studentRepository.findAllByOrderByLastNameAsc());
+        return studentRepository.findAllByOrderByLastNameAsc();
     }
 
     @Override
@@ -43,8 +43,8 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public void save(Student theStudent) {
-        studentRepository.save(theStudent);
+    public Student save(Student theStudent) {
+        return studentRepository.save(theStudent);
     }
 
     @Override

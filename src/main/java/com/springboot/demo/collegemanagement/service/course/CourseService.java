@@ -9,7 +9,7 @@ public interface CourseService {
 
     public Course findById(int theId);
 
-    public void save(Course theCourse);
+    public Course save(Course theCourse);
 
     public void deleteById(int theId);
 }

@@ -35,6 +35,12 @@ public class Course {
         this.title = title;
     }
 
+    public Course(int id, String title, Faculty facultyId) {
+        this.id = id;
+        this.title = title;
+        this.facultyId = facultyId;
+    }
+
     public int getId() {
         return id;
     }
