@@ -1,4 +1,4 @@
-package com.springboot.demo.collegemanagement.exception;
+package com.springboot.demo.collegemanagement.exception.student;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

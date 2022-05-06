@@ -2,6 +2,7 @@ package com.springboot.demo.collegemanagement.service.course;
 
 import com.springboot.demo.collegemanagement.dao.CourseRepository;
 import com.springboot.demo.collegemanagement.entity.Course;
+import com.springboot.demo.collegemanagement.exception.course.CourseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,9 +33,8 @@ public class CourseServiceImpl implements CourseService {
             theCourse=result.get();
         }
         else{
-            throw new RuntimeException("Did not find course Id - "+theId);
+            throw new CourseException("Did not find Course Id - "+theId);
         }
-
         return theCourse;
     }
 

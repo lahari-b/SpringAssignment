@@ -2,7 +2,9 @@ package com.springboot.demo.collegemanagement.service.faculty;
 
 import com.springboot.demo.collegemanagement.dao.FacultyRepository;
 import com.springboot.demo.collegemanagement.entity.Faculty;
+import com.springboot.demo.collegemanagement.exception.faculty.FacultyNotFoundException;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -21,10 +23,14 @@ class FacultyServiceImplTest{
     private FacultyRepository facultyRepository;
     private FacultyServiceImpl facultyService;
 
-    @Test
-    void findAll() {
+    @BeforeEach
+    public void setUp() throws Exception {
         facultyRepository= mock(FacultyRepository.class);
         facultyService=new FacultyServiceImpl(facultyRepository);
+    }
+
+    @Test
+    void findAll() {
 
         List<Faculty> facultyList = new ArrayList<>();
         facultyList.add(new Faculty(201,"Abhishek","Shetty","abhi@gmail.com","MS CS","Asst. Prof","CSE"));
@@ -40,8 +46,6 @@ class FacultyServiceImplTest{
 
     @Test
     void findById() {
-        facultyRepository= mock(FacultyRepository.class);
-        facultyService=new FacultyServiceImpl(facultyRepository);
 
         Faculty faculty=new Faculty(501,"Lucky","Singh","luckt@gmail.com","MTech EE","Prof","ECE");
 
@@ -56,9 +60,15 @@ class FacultyServiceImplTest{
     }
 
     @Test
+    void findByIdNotFound(){
+        Throwable exception=assertThrows(FacultyNotFoundException.class, () -> {
+            Faculty faculty = facultyService.findById(501);
+        });
+        assertEquals("Did not find Faculty Id - 501", exception.getMessage());
+    }
+
+    @Test
     void save() {
-        facultyRepository= mock(FacultyRepository.class);
-        facultyService=new FacultyServiceImpl(facultyRepository);
 
         Faculty faculty=new Faculty(501,"Lucky","Singh","luckt@gmail.com","MTech EE","Prof","ECE");
 
@@ -68,8 +78,6 @@ class FacultyServiceImplTest{
 
     @Test
     void deleteById() {
-        facultyRepository= mock(FacultyRepository.class);
-        facultyService=new FacultyServiceImpl(facultyRepository);
 
         facultyService.deleteById(501);
         verify(facultyRepository).deleteById(501);

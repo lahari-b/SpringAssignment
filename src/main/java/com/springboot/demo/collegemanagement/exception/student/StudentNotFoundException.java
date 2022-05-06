@@ -1,4 +1,4 @@
-package com.springboot.demo.collegemanagement.exception;
+package com.springboot.demo.collegemanagement.exception.student;
 
 public class StudentNotFoundException extends RuntimeException{
     public StudentNotFoundException(String message) {

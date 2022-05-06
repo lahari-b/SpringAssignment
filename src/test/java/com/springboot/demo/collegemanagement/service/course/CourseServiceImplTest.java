@@ -3,7 +3,9 @@ package com.springboot.demo.collegemanagement.service.course;
 import com.springboot.demo.collegemanagement.dao.CourseRepository;
 import com.springboot.demo.collegemanagement.entity.Course;
 import com.springboot.demo.collegemanagement.entity.Faculty;
+import com.springboot.demo.collegemanagement.exception.course.CourseException;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -21,11 +23,14 @@ class CourseServiceImplTest{
     private CourseRepository courseRepository;
     private CourseServiceImpl courseService;
 
-    @Test
-    void findAll() {
-
+    @BeforeEach
+    public void setUp() throws Exception {
         courseRepository=mock(CourseRepository.class);
         courseService=new CourseServiceImpl(courseRepository);
+    }
+
+    @Test
+    void findAll() {
 
         List<Course> courseList = new ArrayList<>();
         courseList.add(new Course("DBMS"));
@@ -40,9 +45,15 @@ class CourseServiceImplTest{
     }
 
     @Test
+    void findByIdNotFound(){
+        Throwable exception=assertThrows(CourseException.class, () -> {
+            Course course = courseService.findById(20);
+        });
+        assertEquals("Did not find Course Id - 20", exception.getMessage());
+    }
+    @Test
     void findById() {
-        courseRepository=mock(CourseRepository.class);
-        courseService=new CourseServiceImpl(courseRepository);
+
         Faculty faculty=new Faculty(501,"Lucky","Singh","luckt@gmail.com","MTech EE","Prof","ECE");
 
         when(courseRepository.findById(20)).thenReturn(Optional.of(new Course(20,"JAVA",faculty)));
@@ -58,8 +69,6 @@ class CourseServiceImplTest{
 
     @Test
     void save() {
-        courseRepository=mock(CourseRepository.class);
-        courseService=new CourseServiceImpl(courseRepository);
 
         Faculty faculty=new Faculty(501,"Lucky","Singh","luckt@gmail.com","MTech EE","Prof","ECE");
         Course course=new Course(20,"JAVA",faculty);
@@ -77,9 +86,6 @@ class CourseServiceImplTest{
 
     @Test
     void deleteById() {
-        courseRepository=mock(CourseRepository.class);
-        courseService=new CourseServiceImpl(courseRepository);
-
         courseService.deleteById(20);
         verify(courseRepository).deleteById(20);
     }

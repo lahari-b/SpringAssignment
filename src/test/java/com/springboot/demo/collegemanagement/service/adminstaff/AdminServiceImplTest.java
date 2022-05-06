@@ -2,8 +2,9 @@ package com.springboot.demo.collegemanagement.service.adminstaff;
 
 import com.springboot.demo.collegemanagement.dao.AdminRepository;
 import com.springboot.demo.collegemanagement.entity.AdminStaff;
-
+import com.springboot.demo.collegemanagement.exception.admin.AdminNotFoundException;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -22,11 +23,14 @@ class AdminServiceImplTest {
     private AdminRepository adminRepository;
     private AdminServiceImpl adminService;
 
-    @Test
-    void findAll() {
-
+    @BeforeEach
+    public void setUp() throws Exception {
         adminRepository=mock(AdminRepository.class);
         adminService=new AdminServiceImpl(adminRepository);
+    }
+
+    @Test
+    void findAll() {
 
         List<AdminStaff> adminList = new ArrayList<>();
         adminList.add(new AdminStaff(101,"Abhishek","Shetty","abhi@gmail.com"));
@@ -43,8 +47,6 @@ class AdminServiceImplTest {
 
     @Test
     void findById() {
-        adminRepository=mock(AdminRepository.class);
-        adminService=new AdminServiceImpl(adminRepository);
 
         AdminStaff adminStaff=new AdminStaff(101,"Lucky","Singh","luckt@gmail.com");
 
@@ -58,11 +60,16 @@ class AdminServiceImplTest {
         Assertions.assertThat(adminStaff1.getEmail()).isEqualTo("luckt@gmail.com");
         verify(adminRepository,times(1)).findById(101);
     }
+    @Test
+    void findByIdNotFound(){
+        Throwable exception=assertThrows(AdminNotFoundException.class, () -> {
+            AdminStaff adminStaff = adminService.findById(101);
+        });
+        assertEquals("Did not find Admin Staff Id - 101", exception.getMessage());
+    }
 
     @Test
     void save() {
-        adminRepository=mock(AdminRepository.class);
-        adminService=new AdminServiceImpl(adminRepository);
 
         AdminStaff adminStaff=new AdminStaff(101,"Lucky","Singh","luckt@gmail.com");
 
@@ -72,8 +79,6 @@ class AdminServiceImplTest {
 
     @Test
     void deleteById() {
-        adminRepository=mock(AdminRepository.class);
-        adminService=new AdminServiceImpl(adminRepository);
 
         adminService.deleteById(101);
         verify(adminRepository).deleteById(101);

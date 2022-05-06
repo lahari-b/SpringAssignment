@@ -2,6 +2,7 @@ package com.springboot.demo.collegemanagement.service.faculty;
 
 import com.springboot.demo.collegemanagement.dao.FacultyRepository;
 import com.springboot.demo.collegemanagement.entity.Faculty;
+import com.springboot.demo.collegemanagement.exception.faculty.FacultyNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,9 +33,8 @@ public class FacultyServiceImpl implements FacultyService {
             theFaculty=result.get();
         }
         else{
-            throw new RuntimeException("Did not find Faculty Id - "+theId);
+            throw new FacultyNotFoundException("Did not find Faculty Id - "+theId);
         }
-
         return theFaculty;
     }
 

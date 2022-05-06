@@ -1,9 +1,10 @@
 package com.springboot.demo.collegemanagement.service.student;
 
-import com.springboot.demo.collegemanagement.dao.CourseRepository;
 import com.springboot.demo.collegemanagement.dao.StudentRepository;
 import com.springboot.demo.collegemanagement.entity.Student;
+import com.springboot.demo.collegemanagement.exception.student.StudentNotFoundException;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -21,12 +22,14 @@ class StudentServiceImplTest {
     private StudentService studentService;
     private StudentRepository studentRepository;
 
-
+    @BeforeEach
+    public void setUp() throws Exception {
+        studentRepository = mock(StudentRepository.class);
+        studentService = new StudentServiceImpl(studentRepository);
+    }
 
     @Test
     void findAll() {
-        studentRepository = mock(StudentRepository.class);
-        studentService = new StudentServiceImpl(studentRepository);
 
         List<Student> studentList = new ArrayList<>();
         studentList.add(new Student(1, "Kathy","Smith", "person1@mail.com",2020,"CIVIL"));
@@ -42,8 +45,6 @@ class StudentServiceImplTest {
 
     @Test
     void findById() {
-        studentRepository = mock(StudentRepository.class);
-        studentService = new StudentServiceImpl(studentRepository);
 
         when(studentRepository.findById(1022)).thenReturn(Optional.of(new Student(1022, "Rachel", "Jane", "rachel@gmail.com",2018,"CSE")));
 
@@ -54,11 +55,16 @@ class StudentServiceImplTest {
         Assertions.assertThat(student.getEmail()).isEqualTo("rachel@gmail.com");
         verify(studentRepository,times(1)).findById(1022);
     }
+    @Test
+    void findByIdNotFound(){
+        Throwable exception=assertThrows(StudentNotFoundException.class, () -> {
+            Student student = studentService.findById(1022);
+        });
+        assertEquals("Did not find Student Id - 1022", exception.getMessage());
+    }
 
     @Test
     void save() {
-        studentRepository = mock(StudentRepository.class);
-        studentService = new StudentServiceImpl(studentRepository);
 
         Student student = new Student(1020,"Haley","Dunphy","haley@gmail.com",2020,"CIVIL");
         studentService.save(student);
@@ -67,8 +73,6 @@ class StudentServiceImplTest {
 
     @Test
     void deleteById() {
-        studentRepository = mock(StudentRepository.class);
-        studentService = new StudentServiceImpl(studentRepository);
 
         studentService.deleteById(1020);
         verify(studentRepository).deleteById(1020);

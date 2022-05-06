@@ -1,4 +1,4 @@
-package com.springboot.demo.collegemanagement.exception;
+package com.springboot.demo.collegemanagement.exception.course;
 
 public class CoursesErrorResponse {
     private int status;

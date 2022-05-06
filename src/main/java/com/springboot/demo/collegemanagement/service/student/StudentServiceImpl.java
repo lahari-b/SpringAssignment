@@ -1,8 +1,8 @@
 package com.springboot.demo.collegemanagement.service.student;
 
-import com.springboot.demo.collegemanagement.dao.CourseRepository;
 import com.springboot.demo.collegemanagement.dao.StudentRepository;
 import com.springboot.demo.collegemanagement.entity.Student;
+import com.springboot.demo.collegemanagement.exception.student.StudentNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,9 +34,8 @@ public class StudentServiceImpl implements StudentService{
             theStudent=result.get();
         }
         else{
-            throw new RuntimeException("Did not find Student Id - "+theId);
+            throw new StudentNotFoundException("Did not find Student Id - "+theId);
         }
-
         return theStudent;
     }
 

@@ -2,6 +2,7 @@ package com.springboot.demo.collegemanagement.service.adminstaff;
 
 import com.springboot.demo.collegemanagement.dao.AdminRepository;
 import com.springboot.demo.collegemanagement.entity.AdminStaff;
+import com.springboot.demo.collegemanagement.exception.admin.AdminNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,9 +33,8 @@ public class AdminServiceImpl implements AdminService {
             theAdminStaff=result.get();
         }
         else{
-            throw new RuntimeException("Did not find Admin Staff Id - "+theId);
+            throw new AdminNotFoundException("Did not find Admin Staff Id - "+theId);
         }
-
         return theAdminStaff;
     }
 
