@@ -12,12 +12,10 @@ import java.util.Optional;
 @Service
 public class StudentServiceImpl implements StudentService{
     private final StudentRepository studentRepository;
-    private final CourseRepository courseRepository;
 
     @Autowired
-    public StudentServiceImpl(StudentRepository studentRepository, CourseRepository courseRepository) {
+    public StudentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
-        this.courseRepository=courseRepository;
     }
 
     @Override

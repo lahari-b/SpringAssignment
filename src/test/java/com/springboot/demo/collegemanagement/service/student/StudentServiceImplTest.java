@@ -20,14 +20,13 @@ class StudentServiceImplTest {
 
     private StudentService studentService;
     private StudentRepository studentRepository;
-    private CourseRepository courseRepository;
+
 
 
     @Test
     void findAll() {
         studentRepository = mock(StudentRepository.class);
-        courseRepository=mock(CourseRepository.class);
-        studentService = new StudentServiceImpl(studentRepository,courseRepository);
+        studentService = new StudentServiceImpl(studentRepository);
 
         List<Student> studentList = new ArrayList<>();
         studentList.add(new Student(1, "Kathy","Smith", "person1@mail.com",2020,"CIVIL"));
@@ -44,7 +43,7 @@ class StudentServiceImplTest {
     @Test
     void findById() {
         studentRepository = mock(StudentRepository.class);
-        studentService = new StudentServiceImpl(studentRepository,courseRepository);
+        studentService = new StudentServiceImpl(studentRepository);
 
         when(studentRepository.findById(1022)).thenReturn(Optional.of(new Student(1022, "Rachel", "Jane", "rachel@gmail.com",2018,"CSE")));
 
@@ -59,7 +58,7 @@ class StudentServiceImplTest {
     @Test
     void save() {
         studentRepository = mock(StudentRepository.class);
-        studentService = new StudentServiceImpl(studentRepository,courseRepository);
+        studentService = new StudentServiceImpl(studentRepository);
 
         Student student = new Student(1020,"Haley","Dunphy","haley@gmail.com",2020,"CIVIL");
         studentService.save(student);
@@ -69,7 +68,7 @@ class StudentServiceImplTest {
     @Test
     void deleteById() {
         studentRepository = mock(StudentRepository.class);
-        studentService = new StudentServiceImpl(studentRepository,courseRepository);
+        studentService = new StudentServiceImpl(studentRepository);
 
         studentService.deleteById(1020);
         verify(studentRepository).deleteById(1020);

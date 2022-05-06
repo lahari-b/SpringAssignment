@@ -5,6 +5,8 @@ import com.springboot.demo.collegemanagement.entity.Course;
 import com.springboot.demo.collegemanagement.entity.Faculty;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
-
+@RunWith(MockitoJUnitRunner.class)
 class CourseServiceImplTest{
 
     private CourseRepository courseRepository;
